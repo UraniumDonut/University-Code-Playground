@@ -1,0 +1,1 @@
+g++ .\main.cpp .\vector2d.cpp .\Verkehrsmittel.cpp .\Radfahrzeug.cpp .\Luftfahrzeug.cpp .\PKW.cpp .\Heissluftballon.cpp
