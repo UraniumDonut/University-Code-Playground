@@ -3,85 +3,64 @@
 #include <string>
 #include <sstream>
 #include <windows.h>
-
-
+#include "Alarmierbar.h"
 using namespace std;
 
-//Implicit class AlarmierbarImpl
-class AlarmierbarImpl
-{
-	private:
-		bool active;
-	public:
-		AlarmierbarImpl(){
-			active = false;
-		}
-		void alarmieren(){
-			cout << "AlarmierbarImpl::alarmieren()" << endl;
-			active = true;
-		}
-		bool istAlarmiert(){
-			cout << "AlarmierbarImpl::istAlarmiert()" << endl;
-			return active;
-		}
-		void alarmZuruecksetzen(){
-			cout << "AlarmierbarImpl::alarmZuruecksetzen()" << endl;
-			active = false;
-		}
 
+//interface Detektor
+class Detektor
+{
+	public:
+		virtual void anschliessen(Alarmierbar& alarmierbar) = 0;
+		virtual void ausloesen() = 0;
+		virtual ~Detektor() {}
 };
 
-int main() {
-	AlarmierbarImpl a;
-	a.alarmieren();
-	assert(a.istAlarmiert());
-	a.alarmZuruecksetzen();
-	assert(!a.istAlarmiert());
-	return 0;
+class DetektorImpl : public Detektor
+{
+	private:
+		string name;
+		Alarmierbar* alarmierbar;
+	public:
+		DetektorImpl(string name)
+		{
+			this->name = name;
+			alarmierbar = NULL;
+		}
+		void anschliessen(Alarmierbar& alarmierbar)
+		{
+			this->alarmierbar = &alarmierbar;
+		}
+		void ausloesen()
+		{
+			alarmierbar->alarmieren();
+		}
+};
+
+class BewegungsDetektor : public DetektorImpl
+{
+	public:
+		BewegungsDetektor(string name) : DetektorImpl(name) {}
+		void anschliessen(Alarmierbar& alarmierbar)
+		{
+			DetektorImpl::anschliessen(alarmierbar);
+		}
+		void ausloesen()
+		{
+			DetektorImpl::ausloesen();
+		}
+};
 
 
+
+
+
+int main()
+{
+	
+
+	Sirene sirene("Sirene");
+	BewegungsDetektor bewegungsDetektor("BewegungsDetektor");
+	bewegungsDetektor.anschliessen(sirene);
+	bewegungsDetektor.ausloesen();
 }
-
-
-
-/*
-int main() {
-	cout << "*** Alarmsystem aufbauen\n";
-	
-	vector<Alarmierbar*> vectorAlarmierbar;
-	Detektor* detektor[2];
-	
-	detektor[0] = new BewegungsDetektor("BD1");
-
-	Sirene sirene;
-	vectorAlarmierbar.push_back(&sirene);
-	detektor[0]->anschliessen(sirene);
-
-	int lumen = 5000;
-	const int N_FLUTLICHT = 3;
-	Flutlicht* flutlicht[N_FLUTLICHT];
-	for(int i=0; i<N_FLUTLICHT; i++) {
-		flutlicht[i] = new Flutlicht(lumen*(i+1));
-		vectorAlarmierbar.push_back(flutlicht[i]);
-		detektor[0]->anschliessen(*flutlicht[i]);
-	}
-	detektor[1] = new GeraeuschDetektor("GD1");
-	detektor[1]->anschliessen(sirene);
-	detektor[1]->anschliessen(*flutlicht[1]);
-
-	cout << "*** Alarmsystem testen\n";
-	detektor[0]->ausloesen();
-	alarmFuerAlleAnzeigen(&vectorAlarmierbar);
-	alarmFuerAlleZuruecksetzen(&vectorAlarmierbar);
-	alarmFuerAlleAnzeigen(&vectorAlarmierbar);
-	detektor[1]->ausloesen();
-	alarmFuerAlleAnzeigen(&vectorAlarmierbar);
-	
-	cout << "*** Alarmsystem abbauen\n";
-	delete detektor[0];
-	delete detektor[1];
-	for(auto f : flutlicht) {
-		delete f;
-	}
-}
-*/

@@ -6,19 +6,21 @@
 #include <string>
 #include <sstream>
 #include <windows.h>
-#include "main.cpp"
+using namespace std;
 
-//Sirene extends AlarmierbarImpl
-class Sirene : public AlarmierbarImpl{
-    private:
-        int anzahl;
+
+//class Sirene extends AlarmierbarImpl
+class Sirene : public AlarmierbarImpl
+{
     public:
-        Sirene();
+        Sirene(string name) : AlarmierbarImpl(name) {}
+        //constructor with random name
+        Sirene() : AlarmierbarImpl("Sirene") {}
         void alarmieren();
-        bool istAlarmiert();
-        void alarmZuruecksetzen();
-        string liefereName();
 };
 
 
-#endif
+
+
+
+#endif 

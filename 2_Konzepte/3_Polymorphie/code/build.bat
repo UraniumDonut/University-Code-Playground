@@ -1,2 +1,2 @@
-g++ main.cpp -o main.exe
-main.exe
+g++ .\main.cpp .\Alarmierbar.h
+a.exe

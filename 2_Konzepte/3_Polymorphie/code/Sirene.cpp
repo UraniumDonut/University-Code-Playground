@@ -3,7 +3,11 @@
 #include <string>
 #include <sstream>
 #include <windows.h>
-#include "main.cpp"
 #include "Sirene.h"
 
-Sirene::Sirene() : AlarmierbarImpl(){ active = false; name}
+
+void Sirene::alarmieren()
+{
+    AlarmierbarImpl::alarmieren();
+    Beep(1000, 1000);
+}
