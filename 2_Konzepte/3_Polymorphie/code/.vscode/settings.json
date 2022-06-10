@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "cassert": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "iosfwd": "cpp",
+        "sstream": "cpp"
     }
 }

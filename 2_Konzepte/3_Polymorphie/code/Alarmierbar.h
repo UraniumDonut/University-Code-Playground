@@ -23,17 +23,23 @@ class Alarmierbar
 //AlarmierbarImpl extends Alarmierbar
 class AlarmierbarImpl : public Alarmierbar
 {
-	private:
-		string name;
-		bool alarmiert;
 	public:
+	string name;
+		bool alarmiert;
 		AlarmierbarImpl(string name)
 		{
 			this->name = name;
 			alarmiert = false;
 		}
+		AlarmierbarImpl(){
+			stringstream ss;
+			ss << "Alarmierbar " << rand() % 100;
+			this->name = ss.str();
+			alarmiert = false;
+		}
 		void alarmieren()
 		{
+			cout << "Ich wurde alarmiert!!!" << endl;
 			alarmiert = true;
 		}
 		string liefereName()
@@ -54,9 +60,13 @@ class Sirene : public AlarmierbarImpl
 {
 	public:
 		Sirene(string name) : AlarmierbarImpl(name) {}
-		//constructor with random name
-		Sirene() : AlarmierbarImpl("Sirene") {}
+		Sirene() : AlarmierbarImpl() {
+			stringstream ss;
+			ss << "Sirene " << rand() % 100;
+			this->name = ss.str();
+		}
 		void alarmieren(){
+			
 			MessageBeep(MB_OK);  
 			AlarmierbarImpl::alarmieren();
 		}

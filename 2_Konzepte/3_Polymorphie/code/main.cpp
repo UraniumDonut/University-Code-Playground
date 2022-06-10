@@ -48,6 +48,7 @@ class BewegungsDetektor : public DetektorImpl
 		void ausloesen()
 		{
 			DetektorImpl::ausloesen();
+			
 		}
 };
 
@@ -59,8 +60,12 @@ int main()
 {
 	
 
-	Sirene sirene("Sirene");
-	BewegungsDetektor bewegungsDetektor("BewegungsDetektor");
+	Sirene sirene[5];
+	/*BewegungsDetektor bewegungsDetektor("BewegungsDetektor");
 	bewegungsDetektor.anschliessen(sirene);
-	bewegungsDetektor.ausloesen();
+	bewegungsDetektor.ausloesen();*/
+	for (int i = 0; i < 5; i++)
+	{
+		cout << sirene[i].liefereName() << endl;
+	}
 }
