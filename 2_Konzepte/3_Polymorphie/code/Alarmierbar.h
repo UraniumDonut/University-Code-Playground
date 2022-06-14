@@ -68,7 +68,36 @@ class Sirene : public AlarmierbarImpl
 		void alarmieren(){
 			
 			MessageBeep(MB_OK);  
-			AlarmierbarImpl::alarmieren();
+			AlarmierbarImpl::alarmiert = true;
+			cout << "Sirene: " << name << " wurde alarmiert!  Heul!" << endl;
+		}
+};
+
+class Flutlicht : public AlarmierbarImpl
+{
+	public:
+		int brightness;
+		Flutlicht(string name) : AlarmierbarImpl(name) { brightness = 123; }
+		Flutlicht(int brightness) : AlarmierbarImpl() {
+			stringstream ss;
+			ss << "Flutlicht " << rand() % 100;
+			this->name = ss.str();
+			this->brightness = brightness;
+		}
+		Flutlicht() : AlarmierbarImpl() {
+			stringstream ss;
+			ss << "Flutlicht " << rand() % 100;
+			this->brightness = 123;
+			this->name = ss.str();
+		}
+		void alarmieren(){
+			
+			MessageBeep(MB_OK);  
+			AlarmierbarImpl::alarmiert = true;
+			cout << "Flutlicht: " << name << " wurde alarmiert! Mit " << brightness << " Helligkeit!" << endl;
+		}
+		void setBrightness(int brightness){
+			this->brightness = brightness;
 		}
 };
 
