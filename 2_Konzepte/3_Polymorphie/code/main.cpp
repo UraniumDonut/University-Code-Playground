@@ -35,12 +35,14 @@ class Detektor
 	public:
 		virtual void anschliessen(Alarmierbar &) = 0;
 		virtual void ausloesen() = 0;
-		virtual ~Detektor() = default;
+		virtual ~Detektor(){
+			
+		}
 };
 
 class DetektorImpl : public Detektor
 {
-	private:
+	protected:
 		string name;
 		vector<Alarmierbar *> angeschlossen;
 		Alarmierbar *alarmierbar;
@@ -48,13 +50,14 @@ class DetektorImpl : public Detektor
 		DetektorImpl(string name)
 		{
 			this->name = name;
+			cout << "Detektor " << name << " aufbauen" << endl;
 		}
 		void anschliessen(Alarmierbar &alarmierbar)
 		{
 			angeschlossen.push_back(&alarmierbar);
     		this->alarmierbar = &alarmierbar;
 
-    		cout << alarmierbar.liefereName() << " an "<< name << " aschliessen" << endl;
+    		cout << alarmierbar.liefereName() << " an "<< name << " anschliessen" << endl;
 		}
 		void alarmieren()
 		{
@@ -62,6 +65,10 @@ class DetektorImpl : public Detektor
     		{
         		e->alarmieren();
     		}
+		}
+		~DetektorImpl()
+		{
+			cout << "Detektor " << name << " abbauen." << endl;
 		}
 };
 
@@ -76,7 +83,7 @@ class BewegungsDetektor : public DetektorImpl
 		void ausloesen()
 		{
 			DetektorImpl::alarmieren();
-			
+			cout << "BewegungsDetektor " << DetektorImpl::name << " detektiert Bewegung" << endl;
 		}
 };
 
@@ -91,6 +98,7 @@ class GerauschDetektor : public DetektorImpl
 		void ausloesen()
 		{
 			DetektorImpl::alarmieren();
+			cout << "Geräuschdetektor " << DetektorImpl::name << " detektiert Bewegung" << endl;
 		}
 };
 
