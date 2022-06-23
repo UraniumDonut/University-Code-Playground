@@ -17,7 +17,6 @@ class Reaktor{
         Atomkern inhalt;
 
 
-        //constructor with Atomkern("", 0, 0) as default
         Reaktor(){}
 
         Atomkern operator*() const{
@@ -33,7 +32,6 @@ class Reaktor{
             this->inhalt -= kern;
             return *this;
         }
-        //overload ~ removes all Atomkerns from the Reaktor
         void operator~(){
             this->inhalt = Atomkern();
         }

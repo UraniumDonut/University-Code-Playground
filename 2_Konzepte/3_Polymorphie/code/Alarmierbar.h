@@ -17,7 +17,9 @@ class Alarmierbar
 		virtual string liefereName() = 0;
 		virtual bool istAlarmiert() = 0;
 		virtual void alarmZuruecksetzen() = 0;
-		virtual ~Alarmierbar() {}
+		virtual ~Alarmierbar() {
+			
+		}
 };
 
 //AlarmierbarImpl extends Alarmierbar
@@ -54,6 +56,11 @@ class AlarmierbarImpl : public Alarmierbar
 		{
 			alarmiert = false;
 		}
+		
+		~AlarmierbarImpl()
+		{
+			cout << "Alarmierbar " << name << " abmelden." << endl;
+		}
 };
 
 class Sirene : public AlarmierbarImpl
@@ -69,7 +76,7 @@ class Sirene : public AlarmierbarImpl
 			
 			MessageBeep(MB_OK);  
 			AlarmierbarImpl::alarmiert = true;
-			cout << "Sirene: " << name << " wurde alarmiert!  Heul!" << endl;
+			cout << name << " geht an!  Heul!" << endl;
 		}
 };
 
@@ -94,7 +101,7 @@ class Flutlicht : public AlarmierbarImpl
 			
 			MessageBeep(MB_OK);  
 			AlarmierbarImpl::alarmiert = true;
-			cout << "Flutlicht: " << name << " wurde alarmiert! Mit " << brightness << " Helligkeit!" << endl;
+			cout << "Flutlicht Nr. " << name << " erstrahlt mit " << brightness << " Lumen!" << endl;
 		}
 		void setBrightness(int brightness){
 			this->brightness = brightness;
