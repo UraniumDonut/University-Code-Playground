@@ -84,6 +84,14 @@ class Atomkern{
             Atomkern kern2(this->symbol(), this->mas*i, this->ord*i);
             return kern2;
         }
+         Atomkern operator>(const Atomkern& kern) const{
+            Atomkern kern2(kern.symbol(), this->mas - kern.massenzahl(), this->ord - kern.ordnungszahl());
+            return kern2;
+        }
+        Atomkern operator<(const Atomkern& kern) const{
+            Atomkern kern2(kern.symbol(), kern.massenzahl()+this->mas, kern.ordnungszahl()+this->ord);
+            return kern2;
+        }
         string debug() const{
             stringstream ss;
             ss << "Atomkern(" << this->symbol() << "," << this->massenzahl() << "," << this->ordnungszahl() << ")";

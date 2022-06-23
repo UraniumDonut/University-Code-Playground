@@ -45,9 +45,9 @@ void PrueffolgeReaktor::pruefungReaktorBetrieb1()
 
 void PrueffolgeReaktor::pruefungReaktorBetrieb2() 
 {
-	Reaktor reaktor;	
+	Reaktor reaktor;
 	// Bei der Verschmelzung von Deuterium mit Tritium wird ein Neutron frei. 
-	reaktor < DEUTERIUM < TRITIUM > Atomkern::NEUTRON;
+	reaktor < ((DEUTERIUM < TRITIUM) > Atomkern::NEUTRON);
 	// Zurück bleibt Helium.
 	SICHERSTELLEN(*reaktor==HELIUM4);
 }
@@ -60,12 +60,13 @@ void PrueffolgeReaktor::pruefungReaktorBetrieb3()
 	const Atomkern STRONTIUM("Sr",94,38);
 
 	// Plutonium spaltet sich bei Wechselwirkung mit einem Neutron in Barium und Strontium und gibt dabei zwei Neutronen frei.
-	reaktor < PLUTONIUM < Atomkern::NEUTRON;
+	
+	reaktor < (PLUTONIUM < Atomkern::NEUTRON);
 	SICHERSTELLEN(*reaktor==Atomkern(240,94));
-	reaktor > BARIUM > STRONTIUM > 2*Atomkern::NEUTRON;
+	reaktor > ((BARIUM < STRONTIUM) < (2*Atomkern::NEUTRON));
 	SICHERSTELLEN(*reaktor==Atomkern(0,0));
 	
 	// Komplette Reaktion in einem Aufruf:
-	reaktor < PLUTONIUM < Atomkern::NEUTRON > BARIUM > STRONTIUM > 2*Atomkern::NEUTRON;
+	reaktor < ((((PLUTONIUM < Atomkern::NEUTRON) > BARIUM) > STRONTIUM) > 2*Atomkern::NEUTRON);
 	SICHERSTELLEN(*reaktor==Atomkern(0,0));
 }
